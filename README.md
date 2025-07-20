@@ -1,73 +1,80 @@
-# Welcome to your Lovable project
+# 🎬 CineNote — Watchlist & Reviews Web App
 
-## Project info
+CineNote is a modern web application that allows users to **search movies/shows**, **build a personal watchlist**, and **write reviews**. It integrates the [OMDB API](http://www.omdbapi.com/) for movie data and uses [Supabase](https://supabase.com) for authentication and database storage.
 
-**URL**: https://lovable.dev/projects/975efb98-6735-4b85-ba82-20f8727fde40
+Built with **React**, **Vite**, **Tailwind CSS**, and **Shadcn UI**, CineNote offers a responsive, clean user experience — perfect for movie lovers who want to track what they watch and share their thoughts.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+- 🔍 Search movies and shows via OMDB
+- ✅ Add to watchlist with status: _Watching_, _Completed_, _Plan to Watch_
+- ✍️ Write, edit, and delete personal reviews
+- ⭐ Rate movies (1–10 scale)
+- 🔐 User authentication (Supabase Auth)
+- 🌗 Dark mode support
+- 📱 Responsive design
+- ⚡ Fast build using Vite
+- ☁️ Deployed on Vercel
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/975efb98-6735-4b85-ba82-20f8727fde40) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Tech Stack
 
-**Use your preferred IDE**
+| Layer         | Tech                       |
+|---------------|----------------------------|
+| Frontend      | React + TypeScript + Vite  |
+| Styling       | Tailwind CSS + Shadcn UI   |
+| Backend (BaaS)| Supabase (Postgres + Auth) |
+| Data Source   | OMDB API                   |
+| Deployment    | Vercel                     |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📦 Folder Structure (Simplified)
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
 ```
 
-**Edit a file directly in GitHub**
+src/
+├── components/        # UI components
+├── pages/             # Route views (Search, Reviews, Watchlist, etc.)
+├── hooks/             # Custom React hooks
+├── integrations/      # Supabase setup
+├── lib/               # OMDB API logic
+├── contexts/          # Auth context
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+````
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📄 Setup Instructions
 
-## What technologies are used for this project?
+1. **Clone the repo**
 
-This project is built with:
+git clone https://github.com/Rehan-Abrar/Cine-Note.git
+cd Cine-Note
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
 
-## How can I deploy this project?
+2. **Install dependencies**
 
-Simply open [Lovable](https://lovable.dev/projects/975efb98-6735-4b85-ba82-20f8727fde40) and click on Share -> Publish.
+npm install
 
-## Can I connect a custom domain to my Lovable project?
+3. **Add environment variables**
+   Create a `.env` file:
 
-Yes, you can!
+VITE_OMDB_API_KEY=your_omdb_api_key
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+4. **Run the app**
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+npm run dev
+
+---
+
+
+## 📃 License
+
+This project is licensed under the [MIT License](LICENSE).
+
