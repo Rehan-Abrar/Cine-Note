@@ -1,4 +1,9 @@
-const OMDB_API_KEY = 'aada7660';
+const OMDB_API_KEY = import.meta.env.VITE_OMDB_API_KEY as string;
+
+// Ensure environment variable is set
+if (!OMDB_API_KEY) {
+  console.error('Missing OMDB API key. Check your .env file.');
+}
 const OMDB_BASE_URL = 'https://www.omdbapi.com/';
 
 export interface OMDBMovie {
