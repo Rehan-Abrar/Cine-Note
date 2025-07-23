@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, Grid, List } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -17,11 +17,46 @@ const SearchResults = ({ initialQuery = '' }: SearchResultsProps) => {
   const [searchQuery, setSearchQuery] = useState(initialQuery || searchParams.get('search') || '');
   const [movies, setMovies] = useState<OMDBMovie[]>([]);
   const [loading, setLoading] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  
+  // Function to determine initial view mode based on screen size
+  const getInitialViewMode = (): 'grid' | 'list' => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 'list' : 'grid'; // 768px is md breakpoint
+    }
+    return 'grid'; // fallback for SSR
+  };
+
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>(getInitialViewMode);
+  const [hasManuallySetView, setHasManuallySetView] = useState(false);
   const [filterType, setFilterType] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const { toast } = useToast();
+
+  // Use layoutEffect to prevent flicker on initial render
+  useLayoutEffect(() => {
+    if (typeof window !== 'undefined' && !hasManuallySetView) {
+      const isMobile = window.innerWidth < 768;
+      setViewMode(isMobile ? 'list' : 'grid');
+    }
+  }, [hasManuallySetView]);
+
+  // Handle media query changes using matchMedia
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      // Only auto-switch if user hasn't manually set their preference
+      if (!hasManuallySetView) {
+        setViewMode(e.matches ? 'list' : 'grid');
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleMediaChange);
+    return () => mediaQuery.removeEventListener('change', handleMediaChange);
+  }, [hasManuallySetView]);
 
   useEffect(() => {
     const urlQuery = searchParams.get('search');
@@ -130,7 +165,6 @@ const SearchResults = ({ initialQuery = '' }: SearchResultsProps) => {
             <div className="flex items-center gap-4">
               {/* Type Filter */}
               <Select value={filterType} onValueChange={(value) => setFilterType(value)}>
-
                 <SelectTrigger className="w-32 bg-input border-border">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
@@ -147,7 +181,10 @@ const SearchResults = ({ initialQuery = '' }: SearchResultsProps) => {
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
                 size="icon"
-                onClick={() => setViewMode('grid')}
+                onClick={() => {
+                  setViewMode('grid');
+                  setHasManuallySetView(true);
+                }}
                 className="transition-smooth"
               >
                 <Grid className="h-4 w-4" />
@@ -155,7 +192,10 @@ const SearchResults = ({ initialQuery = '' }: SearchResultsProps) => {
               <Button
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
                 size="icon"
-                onClick={() => setViewMode('list')}
+                onClick={() => {
+                  setViewMode('list');
+                  setHasManuallySetView(true);
+                }}
                 className="transition-smooth"
               >
                 <List className="h-4 w-4" />

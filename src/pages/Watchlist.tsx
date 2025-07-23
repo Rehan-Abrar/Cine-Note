@@ -123,7 +123,7 @@ const Watchlist = () => {
                   Please login to view your watchlist
                 </CardDescription>
                 <Button 
-                  onClick={() => window.location.href = '/auth'}
+                  onClick={() => window.location.href = '/signup'}
                   className="btn-primary"
                 >
                   Login / Sign Up

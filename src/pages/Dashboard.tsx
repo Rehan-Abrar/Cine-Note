@@ -17,7 +17,7 @@ const Dashboard = () => {
   const [movieDetails, setMovieDetails] = useState<Record<string, any>>({});
 
   useEffect(() => {
-    if (!loading && !user) navigate('/auth');
+    if (!loading && !user) navigate('/login');
   }, [user, loading, navigate]);
 
   useEffect(() => {
